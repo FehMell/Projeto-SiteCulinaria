@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Chefs - Sabor e Arte</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      .font-playfair {
+        font-family: "Playfair Display", serif;
+      }
+    </style>
+  </head>
+  <body class="bg-gray-100 font-sans">
+    <div th:insert="layout :: navbar"></div>
+
+    <div class="max-w-6xl mx-auto px-4 mt-8">
+      <div class="flex justify-between items-center mb-6">
+        <div>
+          <h1 class="font-playfair font-bold text-4xl text-yellow-900 mb-2">
+            Nossos Chefs
+          </h1>
+          <p class="text-xl text-yellow-900">
+            Conheça nossa equipe de chefs talentosos
+          </p>
+        </div>
+        <a
+          href="/usuarios/nova"
+          class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded transition h-fit"
+        >
+          + Novo Chef
+        </a>
+      </div>
+    </div>
+
+    <div class="max-w-6xl mx-auto px-4 py-6">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div
+          th:each="usuario : ${usuarios}"
+          class="border rounded-lg overflow-hidden hover:shadow-md bg-white transition-shadow text-center p-6"
+        >
+          <div
+            class="mx-auto w-32 h-32 rounded-full overflow-hidden bg-gray-200 mb-4"
+          >
+            <img
+              th:if="${usuario.nomeImagem != null}"
+              th:src="@{'/uploads/' + ${usuario.nomeImagem}}"
+              alt="Foto do Chef"
+              class="w-full h-full object-cover"
+            />
+            <div
+              th:if="${usuario.nomeImagem == null}"
+              class="flex items-center justify-center h-full text-gray-400"
+            >
+              Sem foto
+            </div>
+          </div>
+
+          <h2
+            class="text-xl font-semibold text-gray-800"
+            th:text="${usuario.nome}"
+          ></h2>
+
+          <p
+            class="text-gray-600 mt-2 text-sm"
+            th:text="${usuario.biografia}"
+          ></p>
+
+          <div class="mt-4 flex justify-center space-x-2">
+            <a
+              th:href="@{'/usuarios/editar/' + ${usuario.id}}"
+              class="bg-yellow-400 hover:bg-yellow-500 text-white px-3 py-1 rounded text-sm"
+            >
+              Editar
+            </a>
+            <a
+              th:href="@{'/usuarios/deletar/' + ${usuario.id}}"
+              onclick="return confirm('Tem certeza que deseja deletar este chef?');"
+              class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-sm"
+            >
+              Deletar
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div th:insert="rodape :: footer"></div>
+  </body>
+</html>

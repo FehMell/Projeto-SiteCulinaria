@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <title th:text="${receita.id == null} ? 'Nova Receita' : 'Editar Receita'">
+      Nova Receita
+    </title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="bg-gray-100 min-h-screen p-6 font-sans">
+    <div class="max-w-xl mx-auto bg-white shadow-xl rounded-lg p-6">
+      <h1
+        class="text-3xl font-bold mb-6"
+        th:text="${receita.id == null} ? 'Nova Receita' : 'Editar Receita'"
+      >
+        Nova Receita
+      </h1>
+
+      <form
+        th:action="@{/receitas}"
+        method="post"
+        enctype="multipart/form-data"
+        th:object="${receita}"
+      >
+        <input type="hidden" th:field="*{id}" />
+
+        <label class="block mb-2 font-semibold text-gray-700" for="titulo"
+          >Título</label
+        >
+        <input
+          type="text"
+          id="titulo"
+          th:field="*{titulo}"
+          required
+          class="w-full mb-4 p-2 border rounded"
+        />
+
+        <label class="block mb-2 font-semibold text-gray-700" for="ingredientes"
+          >Ingredientes</label
+        >
+        <textarea
+          id="ingredientes"
+          th:field="*{ingredientes}"
+          rows="4"
+          required
+          class="w-full mb-4 p-2 border rounded"
+        ></textarea>
+
+        <label class="block mb-2 font-semibold text-gray-700" for="modoPreparo"
+          >Modo de Preparo</label
+        >
+        <textarea
+          id="modoPreparo"
+          th:field="*{modoPreparo}"
+          rows="4"
+          required
+          class="w-full mb-4 p-2 border rounded"
+        ></textarea>
+
+        <label class="block mb-2 font-semibold text-gray-700" for="categoria"
+          >Categoria</label
+        >
+        <select
+          id="categoria"
+          th:field="*{categoria}"
+          required
+          class="w-full mb-4 p-2 border rounded"
+        >
+          <option
+            value=""
+            disabled
+            th:if="${receita.categoria == null}"
+            selected
+          >
+            Selecione uma categoria
+          </option>
+          <option
+            th:each="cat : ${categorias}"
+            th:value="${cat.id}"
+            th:text="${cat.nome}"
+            th:selected="${cat.equals(receita.categoria)}"
+          ></option>
+        </select>
+
+        <label class="block mb-2 font-semibold text-gray-700" for="imagem"
+          >Imagem</label
+        >
+        <input
+          type="file"
+          id="imagem"
+          name="imagem"
+          accept="image/*"
+          class="mb-4"
+        />
+
+        <div th:if="${receita.nomeImagem != null}" class="mb-4">
+          <p class="mb-1 font-semibold">Imagem atual:</p>
+          <img
+            th:src="@{'/uploads/' + ${receita.nomeImagem}}"
+            alt="Imagem da receita"
+            class="w-48 h-auto rounded border"
+          />
+        </div>
+
+        <button
+          type="submit"
+          class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded"
+        >
+          <span
+            th:text="${receita.id == null} ? 'Salvar Receita' : 'Atualizar Receita'"
+            >Salvar Receita</span
+          >
+        </button>
+        <a href="/receitas" class="ml-4 text-gray-600 hover:underline"
+          >Cancelar</a
+        >
+      </form>
+    </div>
+  </body>
+</html>
