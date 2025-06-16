@@ -50,7 +50,7 @@ public class ReceitaController {
                 Files.copy(imagem.getInputStream(), caminhoArquivo, StandardCopyOption.REPLACE_EXISTING);
                 receita.setNomeImagem(nomeArquivo);
             } else if (receita.getId() != null) {
-                // Mantém a imagem antiga ao editar e não enviar nova
+               
                 Receita receitaExistente = receitaRepository.findById(receita.getId()).orElse(null);
                 if (receitaExistente != null) {
                     receita.setNomeImagem(receitaExistente.getNomeImagem());
@@ -60,7 +60,7 @@ public class ReceitaController {
 
         } catch (IOException e) {
             e.printStackTrace();
-            // trate o erro como preferir
+           
         }
         return "redirect:/receitas";
     }
