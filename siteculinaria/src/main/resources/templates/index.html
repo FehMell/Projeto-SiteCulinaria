@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sabor & Arte</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      .font-playfair {
+        font-family: "Playfair Display", serif;
+      }
+      body {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+      }
+      .cta-section {
+        margin-top: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <div th:insert="layout :: navbar"></div>
+
+    <section class="bg-yellow-50 py-24">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center w-full">
+        <h1 class="font-playfair font-bold text-5xl md:text-7xl mb-6">
+          <span class="text-yellow-900">Sabor</span>
+          <span class="text-yellow-900">&</span>
+          <span
+            class="bg-gradient-to-r from-red-500 to-red-700 bg-clip-text text-transparent"
+            >Arte</span
+          >
+        </h1>
+        <p class="text-xl md:text-2xl text-gray-600 mb-8 max-w-2xl mx-auto">
+          Descubra receitas incríveis, compartilhe seus pratos favoritos e
+          conecte-se com uma comunidade apaixonada por culinária.
+        </p>
+        <div class="flex justify-center gap-6">
+          <a
+            href="/receitas"
+            class="bg-red-500 hover:bg-red-600 text-white px-8 py-2 rounded-lg font-medium transition-colors text-base"
+          >
+            Explorar Receitas →
+          </a>
+          <a
+            href="/receitas/nova"
+            class="border-2 border-amber-600 text-amber-600 bg-white hover:bg-amber-50 px-8 py-2 rounded-lg font-medium transition-colors text-base"
+          >
+            Cadastrar Receita
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-16 bg-white">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-center gap-16 md:gap-24">
+          <div class="text-center flex flex-col items-center">
+            <img
+              th:src="@{'/uploads/livro-de-receitas-2.png'}"
+              alt="Ícone de Receitas"
+              class="w-16 h-16 md:w-20 md:h-20 mb-3 object-contain"
+            />
+            <div
+              id="contador-receitas"
+              class="text-3xl font-bold text-red-600 mb-1"
+            >
+              0
+            </div>
+            <div class="text-gray-600 text-lg font-playfair">Receitas</div>
+          </div>
+
+          <div class="text-center flex flex-col items-center">
+            <img
+              th:src="@{'/uploads/pessoas.png'}"
+              alt="Ícone de Chefs"
+              class="w-16 h-16 md:w-20 md:h-20 mb-3 object-contain"
+            />
+            <div
+              id="contador-chefs"
+              class="text-3xl font-bold text-amber-600 mb-1"
+            >
+              0
+            </div>
+            <div class="text-gray-600 text-lg font-playfair">Chefs</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section
+      class="bg-gradient-to-r from-red-500 to-red-700 py-16 text-white cta-section"
+    >
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h2 class="font-playfair font-bold text-4xl mb-6">
+          Pronto para Compartilhar sua Paixão?
+        </h2>
+        <p class="text-xl mb-8 max-w-2xl mx-auto opacity-90">
+          Junte-se à nossa comunidade e compartilhe suas receitas favoritas com
+          milhares de pessoas apaixonadas por culinária.
+        </p>
+        <a
+          href="/receitas/nova"
+          class="inline-block bg-white text-red-600 hover:bg-gray-100 px-8 py-3 rounded-lg font-bold transition-colors text-lg"
+        >
+          Começar Agora
+        </a>
+      </div>
+    </section>
+
+    <div th:insert="rodape :: footer" class="footer"></div>
+
+    <script>
+      function formatCount(count) {
+        if (count >= 1000) {
+          return (count / 1000).toFixed(1) + "K+";
+        }
+        return count + "+";
+      }
+
+      function atualizarContadores() {
+        fetch("/receitas/api/total-receitas")
+          .then((response) => response.json())
+          .then((data) => {
+            document.getElementById("contador-receitas").textContent =
+              formatCount(data);
+          });
+
+        fetch("/usuarios/api/total-chefs")
+          .then((response) => response.json())
+          .then((data) => {
+            document.getElementById("contador-chefs").textContent =
+              formatCount(data);
+          });
+      }
+
+      atualizarContadores();
+      setInterval(atualizarContadores, 30000);
+    </script>
+  </body>
+</html>

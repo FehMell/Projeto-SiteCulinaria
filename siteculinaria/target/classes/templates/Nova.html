@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Nova Receita</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="bg-gray-100 p-6 font-sans">
+    <div class="max-w-2xl mx-auto bg-white p-6 rounded shadow">
+      <h1 class="text-2xl font-bold mb-4">Criar Nova Receita</h1>
+
+      <form
+        th:action="@{/receitas}"
+        method="post"
+        enctype="multipart/form-data"
+        class="space-y-4"
+      >
+        <div>
+          <label class="block font-semibold mb-1" for="titulo">Título</label>
+          <input
+            type="text"
+            id="titulo"
+            name="titulo"
+            th:value="${receita.titulo}"
+            required
+            class="w-full border px-3 py-2 rounded"
+          />
+        </div>
+
+        <div>
+          <label class="block font-semibold mb-1" for="ingredientes"
+            >Ingredientes</label
+          >
+          <textarea
+            id="ingredientes"
+            name="ingredientes"
+            required
+            class="w-full border px-3 py-2 rounded"
+            th:text="${receita.ingredientes}"
+          ></textarea>
+        </div>
+
+        <div>
+          <label class="block font-semibold mb-1" for="modoPreparo"
+            >Modo de Preparo</label
+          >
+          <textarea
+            id="modoPreparo"
+            name="modoPreparo"
+            required
+            class="w-full border px-3 py-2 rounded"
+            th:text="${receita.modoPreparo}"
+          ></textarea>
+        </div>
+
+        <div>
+          <label class="block font-semibold mb-1" for="categoria"
+            >Categoria</label
+          >
+          <select
+            id="categoria"
+            name="categoria.id"
+            required
+            class="w-full border px-3 py-2 rounded"
+          >
+            <option value="" disabled selected>Selecione uma categoria</option>
+            <option
+              th:each="cat : ${categorias}"
+              th:value="${cat.id}"
+              th:text="${cat.nome}"
+            ></option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block font-semibold mb-1" for="imagem">Imagem</label>
+          <input
+            type="file"
+            id="imagem"
+            name="imagem"
+            accept="image/*"
+            class="border rounded px-3 py-2 w-full"
+          />
+        </div>
+
+        <button
+          type="submit"
+          class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded"
+        >
+          Salvar Receita
+        </button>
+      </form>
+    </div>
+  </body>
+</html>

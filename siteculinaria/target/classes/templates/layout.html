@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Sabor e Arte</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      .font-playfair {
+        font-family: "Playfair Display", serif;
+      }
+    </style>
+  </head>
+  <body class="bg-gray-100 font-sans">
+    <div th:fragment="navbar">
+      <nav class="flex items-center bg-white shadow p-4">
+        <div class="flex items-center space-x-2">
+          <img
+            th:src="@{/uploads/chapeu-de-chef.png}"
+            alt="Chapéu de Chef"
+            class="w-8 h-8"
+          />
+          <span class="text-2xl font-bold font-playfair">
+            <span class="text-yellow-900">Sabor &</span>
+            <span
+              class="bg-gradient-to-r from-red-500 to-red-700 bg-clip-text text-transparent"
+              >Arte</span
+            >
+          </span>
+        </div>
+
+        <div class="flex-grow"></div>
+
+        <div
+          class="flex space-x-10 justify-center flex-grow max-w-2xl text-lg font-semibold"
+        >
+          <a href="/" class="text-gray-700 hover:text-red-600 transition-colors"
+            >Home</a
+          >
+          <a
+            href="/receitas"
+            class="text-gray-700 hover:text-red-600 transition-colors"
+            >Receitas</a
+          >
+          <a
+            href="/usuarios"
+            class="text-gray-700 hover:text-red-600 transition-colors"
+            >Chefs</a
+          >
+          <!-- Novo link Contato -->
+          <a
+            href="/contato"
+            class="text-gray-700 hover:text-red-600 transition-colors"
+            >Contato</a
+          >
+        </div>
+
+        <div class="flex-grow"></div>
+      </nav>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Contato</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      .font-playfair {
+        font-family: "Playfair Display", serif;
+      }
+    </style>
+  </head>
+  <body class="bg-gray-100 flex flex-col min-h-screen">
+    <div th:replace="layout :: navbar"></div>
+
+    <main class="flex-grow pt-24 pb-16 px-4 max-w-md mx-auto">
+      <div class="bg-white p-6 rounded shadow text-center">
+        <img
+          th:src="@{/uploads/gmail.png}"
+          alt="Ícone Gmail"
+          class="mx-auto mb-4"
+          style="width: 64px; height: 64px"
+        />
+
+        <h1 class="text-2xl font-bold mb-6 text-red-600 font-playfair">
+          Tire suas dúvidas / Dê sua sugestão
+        </h1>
+
+        <div
+          th:if="${sucesso}"
+          class="mb-4 text-green-600 font-semibold"
+          th:text="${sucesso}"
+        ></div>
+        <div
+          th:if="${erro}"
+          class="mb-4 text-red-600 font-semibold"
+          th:text="${erro}"
+        ></div>
+
+        <form
+          method="post"
+          action="#"
+          th:action="@{/contato}"
+          class="space-y-5 text-left"
+        >
+          <div>
+            <label class="block font-semibold mb-1" for="nome">Nome</label>
+            <input
+              id="nome"
+              type="text"
+              name="nome"
+              required
+              class="w-full border border-gray-300 px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-red-600"
+            />
+          </div>
+          <div>
+            <label class="block font-semibold mb-1" for="email">E-mail</label>
+            <input
+              id="email"
+              type="email"
+              name="email"
+              required
+              class="w-full border border-gray-300 px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-red-600"
+            />
+          </div>
+          <div>
+            <label class="block font-semibold mb-1" for="mensagem"
+              >Mensagem</label
+            >
+            <textarea
+              id="mensagem"
+              name="mensagem"
+              rows="5"
+              required
+              class="w-full border border-gray-300 px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-red-600"
+            ></textarea>
+          </div>
+          <button
+            type="submit"
+            class="w-full bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition"
+          >
+            Enviar
+          </button>
+        </form>
+      </div>
+    </main>
+
+    <div th:replace="rodape :: footer"></div>
+  </body>
+</html>
